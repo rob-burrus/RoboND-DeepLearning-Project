@@ -13,16 +13,39 @@ In addition to the use of separable convolutions, the encoder layer utilizes bat
 
 The decoder portion of the network consists of upsampling layers, traditionally done with transposed convolutions. In this network, I am using bilinear upsampling, a resampling technique that utilizes the weighted average of four nearest known pixels, located diagonally to a given pixel, to estimate a new pixel intensity value. After bilinear upsampling, the upsampled layer is concatenated with a previous layer with more spatial information, providing the same functionality as using skip connections. Finally, a separable convolution layer is added to better learn the spatial details from the previous layers. Together, these 3 steps (bilinear upsampling, concatenation, separable convolution) define 1 "decoder block".
 
-Describe final model architecture.
 
-Describe brute force trial and error process
+Final network architecture:
+ - 2 layers of separable_conv2d_batchnorm with 16 and 32 filters, both with strides of 2. 
+ - 1x1 conv2d_batchnorm convolutional layer with 64 filters and a kernel_size and stride of 1
+ - 3 decoder blocks, each comprised of a bilinear_upsample layer, layer concatenation, and 2 separable_conv2d_batchnorm layers
+ 
+Hyperparameters:
+ - learning_rate = 0.005
+ - batch_size = 64
+ - num_epochs = 15
+ - steps_per_epoch = 200
+ - validation_steps = 50
+ - workers = 2
+ 
+I did not collect any extra data from the simulator, and instead relied on optimizing the network architecture and tuning hyperparamters to improve model performance. The process of arriving at this final network architecture was brute force trial and error. I started with a netwrok with more layers and a higher learning rate, and noticed the validation loss was much higher than the training loss, indicating that the network was overfitting to the trainig data. I then removed an encoder and decoder block, decreased my learning rate, and increased the number of epochs. This combination 
+
+### Results, limitations and future improvements
+
+The model results yielded a satisfactory weighted IoU score, and can be improved in several ways. The network architecture itself could be improved, and the hyperparamters could be better tuned. To aid in this effort, a technique like GridSearch could be used that automatically test and find the optimal hyperparamters in a given range. The most effective way to improve this model would be to collect and train on more data. Furthermore, this model is only trained on data of huma pedestrians and would not yield good results for segmenting other classes of objects, including cars. To perform well in that task, more data would be needed that inlcudes images and masks of the desired object classes. 
 
 
-### Hyperparameters
-
-### Results
-
-### Limitations and future improvements
+Model performance metrics:
+ - number of validation samples intersection over the union evaulated on 542
+ - average intersection over union for background is 0.9957319789129099
+ - average intersection over union for other people is 0.3463988082570592
+ - average intersection over union for the hero is 0.904234709276991
+ - number true positives: 539, number false positives: 0, number false negatives: 0
+ - number of validation samples intersection over the union evaulated on 270
+ - average intersection over union for background is 0.9855268576626636
+ - average intersection over union for other people is 0.6774741963135147
+ - average intersection over union for the hero is 0.0
+ - number true positives: 0, number false positives: 129, number false negatives: 0
+ - Final weighted IoU score: 0.415109831473
 
 
 
