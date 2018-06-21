@@ -35,7 +35,7 @@ Batch size defines the number of dataset examples that the network will train on
 
 An epoch is a single forward and backward pass of the whole dataset. Multiple epochs are used to increase the accuracy of the model without requiring more data.
  
-I did not collect any extra data from the simulator, and instead relied on optimizing the network architecture and tuning hyperparamters to improve model performance. The process of arriving at this final network architecture was brute force trial and error. I started with a netwrok with more layers and a higher learning rate, and noticed the validation loss was much higher than the training loss, indicating that the network was overfitting to the trainig data. I then removed an encoder and decoder block, decreased my learning rate, and increased the number of epochs. 
+I did not collect any extra data from the simulator, and instead relied on optimizing the network architecture and tuning hyperparamters to improve model performance. The process of arriving at the final network architecture and hyperparameters was brute force trial and error. I started with a netwrok with more layers and a higher learning rate, and noticed the validation loss was much higher than the training loss, indicating that the network was overfitting to the trainig data. I then removed an encoder and decoder block, decreased my learning rate, and increased the number of epochs. These changes significantly increased the weighted IoU score to a satisfactory level.
 
 ### Results, limitations and future improvements
 
