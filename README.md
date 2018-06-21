@@ -19,6 +19,8 @@ Final network architecture:
  - 1x1 conv2d_batchnorm convolutional layer with 64 filters and a kernel_size and stride of 1
  - 3 decoder blocks, each comprised of a bilinear_upsample layer, layer concatenation, and 2 separable_conv2d_batchnorm layers
  
+ ![network](./docs/network.png)
+ 
 Hyperparameters:
  - learning_rate = 0.005
  - batch_size = 64
@@ -27,7 +29,13 @@ Hyperparameters:
  - validation_steps = 50
  - workers = 2
  
-I did not collect any extra data from the simulator, and instead relied on optimizing the network architecture and tuning hyperparamters to improve model performance. The process of arriving at this final network architecture was brute force trial and error. I started with a netwrok with more layers and a higher learning rate, and noticed the validation loss was much higher than the training loss, indicating that the network was overfitting to the trainig data. I then removed an encoder and decoder block, decreased my learning rate, and increased the number of epochs. This combination 
+Learning rate is a network hyper-parameter that determines how much the model weights are adjusted with respect to the gradient loss. The lower the value, the slower the network will learn. Conversely, a high learning rate might cause the network to fail to converge. 
+
+Batch size defines the number of dataset examples that the network will train on for a forward pass and back propogation. Often, splitting the data into batches is necessary to fit the data into memory. 
+
+An epoch is a single forward and backward pass of the whole dataset. Multiple epochs are used to increase the accuracy of the model without requiring more data.
+ 
+I did not collect any extra data from the simulator, and instead relied on optimizing the network architecture and tuning hyperparamters to improve model performance. The process of arriving at this final network architecture was brute force trial and error. I started with a netwrok with more layers and a higher learning rate, and noticed the validation loss was much higher than the training loss, indicating that the network was overfitting to the trainig data. I then removed an encoder and decoder block, decreased my learning rate, and increased the number of epochs. 
 
 ### Results, limitations and future improvements
 
